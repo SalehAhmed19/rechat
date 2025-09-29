@@ -38,8 +38,36 @@ const signup = async (req, res) => {
       });
     }
   } catch (err) {
+    res.status(500).send({ message: "Server error" });
     console.log(err);
   }
 };
 
-module.exports = { signup };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    const isMatched = await bcrypt.compareSync(password, user.password);
+
+    if (!user || !isMatched) {
+      res.status(404).send({ message: "Invalied credentials." });
+    }
+
+    generateJwt(user._id, res);
+
+    res.status(201).json({
+      message: "Logged in successfully!",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Server error" });
+  }
+};
+
+module.exports = { signup, login };
