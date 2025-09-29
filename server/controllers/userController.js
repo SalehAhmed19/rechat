@@ -80,4 +80,17 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, logout };
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+
+    console.log(users);
+
+    res.status(201).send(users);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: "Server error" });
+  }
+};
+
+module.exports = { signup, login, logout, getUsers };

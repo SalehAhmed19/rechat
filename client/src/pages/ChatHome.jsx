@@ -3,6 +3,7 @@ import SideChat from "../components/SideBar/SideChat";
 import ChatBox from "../components/Chats/ChatBox";
 import Logout from "../components/Authentication/Logout";
 import Signup from "../components/Authentication/Signup";
+import useGetUsers from "../hooks/useGetUsers";
 
 export default function ChatHome() {
   const user = false;
@@ -23,6 +24,7 @@ export default function ChatHome() {
       </div>
     );
   }
+
   return (
     <>
       <Signup />

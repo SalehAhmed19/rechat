@@ -5,7 +5,12 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const handleLogin = (credential) => {
     console.log(credential);
     reset();
@@ -27,6 +32,9 @@ export default function Login() {
             register={register}
             registerValue={"email"}
           />
+          {errors.email && (
+            <p className="text-red-600 text-sm">Enter valied email!</p>
+          )}
           <InputText
             lable={"Password"}
             type={"password"}
@@ -34,6 +42,9 @@ export default function Login() {
             register={register}
             registerValue={"password"}
           />
+          {errors.password && (
+            <p className="text-red-600 text-sm">Enter valied password!</p>
+          )}
 
           <button className="bg-blue-600 hover:bg-blue-700 duration-300 rounded-full px-5 py-3 cursor-pointer font-bold">
             Signup

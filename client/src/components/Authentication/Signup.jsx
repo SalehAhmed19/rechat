@@ -1,15 +1,57 @@
-import React from "react";
+import axios from "axios";
 import logo from "../../assets/logo.png";
 import InputText from "../Form/InputText";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signupUser } from "../../RTK/features/userSlice";
+import toast from "react-hot-toast";
 
 export default function Signup() {
-  const { register, handleSubmit, reset } = useForm();
-  const handleSignup = (credential) => {
-    console.log(credential);
-    reset();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const password = watch("password", ""); // for track password
+  watch("confirmPassword", ""); // for track password
+
+  const validatePasswordMatch = (value) => {
+    return value === password || "Password doesn't match!";
   };
+
+  const handleSignup = async (credential) => {
+    const userInfo = {
+      name: credential.name,
+      email: credential.email,
+      password: credential.password,
+      confirmPassword: credential.confirmPassword,
+    };
+    console.log({ userInfo });
+
+    const response = await dispatch(signupUser(userInfo));
+
+    if (response.meta.requestStatus === "fulfilled") {
+      reset();
+      navigate("/authentication/login");
+      toast.success("Registered Successfully!");
+    }
+
+    // const response = await axios.post(
+    //   `${api}/user/authentication/signup`,
+    //   userInfo
+    // );
+    // reset();
+
+    // console.log(response.data);
+    // return response.data;
+  };
+
   return (
     <div className="bg-[#0D0C0C] text-white p-5 place-content-center h-screen">
       <img src={logo} alt="logo" className="w-36 mx-auto" />
@@ -29,6 +71,9 @@ export default function Signup() {
             register={register}
             registerValue={"name"}
           />
+          {errors.name && (
+            <p className="text-red-600 text-sm">Name is required!</p>
+          )}
           <InputText
             lable={"Email"}
             type={"email"}
@@ -36,6 +81,9 @@ export default function Signup() {
             register={register}
             registerValue={"email"}
           />
+          {errors.email && (
+            <p className="text-red-600 text-sm">Enter valied email!</p>
+          )}
           <InputText
             lable={"Password"}
             type={"password"}
@@ -43,13 +91,28 @@ export default function Signup() {
             register={register}
             registerValue={"password"}
           />
-          <InputText
-            lable={"Confirm Password"}
-            type={"password"}
-            placeholder={"Confirm Password"}
-            register={register}
-            registerValue={"confirmPassword"}
-          />
+          {errors.password && (
+            <p className="text-red-600 text-sm">Password is required!</p>
+          )}
+          <div>
+            <label className="block text-[#787878] mb-2">
+              Confirm Password
+            </label>
+            <input
+              {...register("confirmPassword", {
+                required: true,
+                validate: validatePasswordMatch,
+              })}
+              type="password"
+              placeholder="Confirm password"
+              className="border border-[#333] rounded-full px-5 py-3 focus:outline-2 outline-[#333] w-full"
+            />
+          </div>
+          {errors.confirmPassword && (
+            <p className="text-red-600 text-sm">
+              {errors.confirmPassword.message}
+            </p>
+          )}
 
           <button className="bg-blue-600 hover:bg-blue-700 duration-300 rounded-full px-5 py-3 cursor-pointer font-bold">
             Signup
