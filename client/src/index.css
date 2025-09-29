@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 /*
         --------------------------------------------------
         1. WEBKIT STYLES (Chrome, Safari, Edge)
