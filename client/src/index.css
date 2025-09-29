@@ -1,1 +1,45 @@
 @import "tailwindcss";
+/*
+        --------------------------------------------------
+        1. WEBKIT STYLES (Chrome, Safari, Edge)
+        --------------------------------------------------
+        These pseudo-elements are used by all Chromium-based browsers.
+        */
+
+/* Width/Size of the entire scrollbar */
+.custom-scroll::-webkit-scrollbar {
+  width: 12px; /* Set horizontal scrollbar height here */
+}
+
+/* Background track of the scrollbar */
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9; /* slate-100 */
+  border-radius: 10px;
+}
+
+/* Draggable handle (the thumb) */
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #06b6d4; /* cyan-600 */
+  border-radius: 10px;
+  /* Optional: Add a subtle border for depth */
+  border: 3px solid #f1f5f9;
+}
+
+/* Change color when hovering over the thumb */
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #0891b2; /* cyan-700 */
+}
+
+/*
+        --------------------------------------------------
+        2. FIREFOX STYLES
+        --------------------------------------------------
+        Firefox uses standard CSS properties on the element itself.
+        */
+.custom-scroll {
+  /* Sets the color of the thumb and the track */
+  scrollbar-color: #333 transparent; /* thumb track */
+
+  /* Sets the width (auto, thin, or none) */
+  scrollbar-width: thin; /* 'auto' or 'thin' */
+}
