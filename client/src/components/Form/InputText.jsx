@@ -14,7 +14,7 @@ export default function InputText({
         {...register(registerValue)}
         type={type}
         placeholder={placeholder}
-        className="border border-[#333] rounded-xl px-5 py-2 focus:outline-2 outline-[#333] w-full"
+        className="border border-[#333] rounded-full px-5 py-3 focus:outline-2 outline-[#333] w-full"
       />
     </div>
   );

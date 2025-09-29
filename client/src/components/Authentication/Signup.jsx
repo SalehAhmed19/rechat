@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
-  const { register } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const handleSignup = (credential) => {
+    console.log(credential);
+    reset();
+  };
   return (
     <div className="bg-[#0D0C0C] text-white p-5 place-content-center h-screen">
       <img src={logo} alt="logo" className="w-36 mx-auto" />
@@ -14,7 +18,10 @@ export default function Signup() {
         Create a new account
       </h1>
       <div className="bg-[#111111] w-1/3 mx-auto p-5 rounded-xl">
-        <form className="flex flex-col gap-5">
+        <form
+          onSubmit={handleSubmit(handleSignup)}
+          className="flex flex-col gap-5"
+        >
           <InputText
             lable={"Name"}
             type={"text"}
