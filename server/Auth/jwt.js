@@ -5,7 +5,7 @@ const generateJwt = (userId, res) => {
     expiresIn: "1h",
   });
 
-  res.cookie("token", token, {
+  res.cookie("jwt", token, {
     httpOnly: true, // xss
     secure: true,
     sameSite: "strict", // csrf
